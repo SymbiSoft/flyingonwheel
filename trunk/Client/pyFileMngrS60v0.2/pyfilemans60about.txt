@@ -1,0 +1,6 @@
+
+<< pyFileManager for S60 >>
+ Copyright 2005 - 2006 by
+      Lasse Huovinen
+
+No warranty. Use at your own risk.
