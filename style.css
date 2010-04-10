@@ -61,7 +61,7 @@ li.bg, .bg { clear:both; border-top:1px solid #dcdcdc; padding:0; margin:20px 0;
     define width and height of list item (slide)
     entire slider area will adjust according to the parameters provided here
 */
-#slider li { width:850px; height:458px; overflow:hidden; padding:0; margin:0; }
+#slider li { width:850px; height:458px; overflow:hidden; padding:0; margin:0; font-family: Calibri, Arial, Helvetica, sans-serif;}
 p#controls { margin:0; position:relative; }
 #prevBtn,
 #nextBtn { display:block; margin:0; overflow:hidden; width:29px; height:29px; position:absolute; left:-15px; top:-220px; }
