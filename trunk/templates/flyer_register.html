@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %} Flying on Wheel | Flyer Register {% endblock %}
+{% block flyer_info %}
+<div style="float:left;width:35%;" align="center">
+    <br/>
+    <br/>
+    <br/>
+    <img src="/static/main.png" alt="{{ flyer_error }}" title="{{ flyer_error }}"></img>
+</div>
+<div style="float:left;width:50%" align="left">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    Welcome to Register~
+    <br/>
+    <br/>
+    You are the {{ flyers_count }}th to register the App, Thank you~
+    <br/>
+    <br/>
+    <div style="width: 50%" align="left">
+        <form action="/register" method="post">
+            <label>Flyer Name:</label>
+            <input type="text" name="name" id="name">
+            <br/>
+            <br/>
+            <label>Password:&nbsp;&nbsp;</label>
+            <input type="password" name="password" id="password">
+            <br/>
+            <br/>
+            <label>RePassword:</label>
+            <input type="password" name="repassword" id="repassword">
+            <br/>
+            <br/>
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <a href="/"> Return To Main Page </a>
+</div>
+{% endblock %}

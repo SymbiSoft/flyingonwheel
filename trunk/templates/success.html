@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %} Flying on Wheel | Success {% endblock %}
+{% block flyer_info %}
+<div style="float:left;width:40%;" align="center">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <img src="/static/404-img.png" alt="{{ flyer_error }}" title="{{ flyer_error }}" align="bottom"></img>
+</div>
+<div style="float:left;width:50%" align="left">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    Your operate have been  executed, Look Here:<br/>
+    <br/>
+    <br/>
+    {{ flyer_success }}
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <a href="/"> Return To Main Page </a>
+</div>
+{% endblock %}

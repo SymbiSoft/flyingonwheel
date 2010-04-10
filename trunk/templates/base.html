@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>{% block title %} {{ blog.title }} {% endblock %}</title>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="/style.css" rel="stylesheet" type="text/css" />
+        {% block head_block %}{% endblock %}
+    </head>
+    <body {% block body_block %}{% endblock %}>
+        {% block init_js_block %}{% endblock %}
+        <div class="main">
+            <div class="header">
+                <div class="block_header">
+                    <div class="logo"><a href="/"><img src="/images/logo.gif" width="355" height="57" border="0" alt="logo" /></a></div>
+                    <div class="menu">
+                        <ul>
+                            {% if flyer_name %}
+                                <!-- choice which days to view -->
+                                <li>{% block date_select %}{% endblock %}</li>
+                                <li><a href="/flyer/{{ flyer_name }}"> {{ flyer_name }} </a></li>
+                                <li><a href="/logout"> Logout </a></li>
+                            {% else %}
+                                <li>Welcome to login or register</li>
+                                <li><a href="/login"> Login </a></li>
+                                <li><a href="/register"> Register </a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="clr"> </div>
+                </div>
+            </div>
+            <div class="slider" align="center">
+                <div class="slice1">
+                    <div class="slice2" id="slider">
+                        <ul>
+                            <li class="slide">
+                                {% block flyer_info %}{% endblock %}
+                            </li>
+                        </ul>
+                    </div>
+                    {% block btn_block %}{% endblock %}
+                </div>
+            </div>
+            <div class="clr"></div>
+            <div class="bloga_resize">
+                <div class="bloga_resizee">
+                    <div class="bloga">
+                        <img src="/images/img_top_1.gif" alt="picture" width="51" height="89" />
+                        <p>使用帮助<br />
+                        User manual</p>
+                        <p><a href="#"><strong>Look Here~</strong></a></p>
+                    </div>
+                    <div class="bloga">
+                        <img src="/images/img_top_2.gif" alt="picture" width="51" height="89" />
+                        <p>欢迎试用并提出改进意见，谢谢～<br />
+                        Good Luck to receive your views, Thanks~</p>
+                        <p><a href="#"><strong>Commit Here~</strong></a></p>
+                    </div>
+                    <div class="bloga">
+                        <img src="/images/img_top_3.gif" alt="picture" width="51" height="89" />
+                        <p>欢迎访问我的主页：）<br />
+                        Welcome to Home Page:)</p>
+                        <p><a href="http://iamsk7.appspot.com"><strong>Click Here~</strong></a></p>
+                    </div>
+                </div>
+                <div class="clr"></div>
+            </div>
+            <div class="clr"></div>
+        </div>
+        <div class="footer">
+            <div class="footer_resize">
+                <p class="leftt">Copyright © flyingonwheel.appspot.com. All Rights Reserved</p>
+                <p class="rightt">Design by <a href="http://flyingonwheel.appspot.com/">flyingonwheel.appspot.com</a></p>
+                <div class="clr"></div>
+            </div>
+            <div class="clr"></div>
+        </div>
+    </body>
+</html>
