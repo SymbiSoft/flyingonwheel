@@ -6,6 +6,7 @@ import datetime
 import time
 import re
 import os
+import hashlib
 
 from google.appengine.ext.webapp import template
 from google.appengine.ext import db
@@ -221,6 +222,9 @@ def checkRight(name, password):
     """
         Check the post right
     """
+    md5password = hashlib.md5()
+    md5password.update(password)
+    password = md5password.hexdigest()
     f = db.GqlQuery ("SELECT * FROM Flyer where name = :1 AND password = :2 AND flag = :3", name, password, True)
     if f.count() == 1:
         return True
@@ -308,8 +312,10 @@ class Flyer_register(webapp.RequestHandler):
         # Save the flyer
         else:
             flyer = Flyer(date=datetime.datetime.now() + datetime.timedelta(hours = 8))
+            md5password = hashlib.md5()
+            md5password.update(flyer_password)
             flyer.name = flyer_name
-            flyer.password = flyer_repassword
+            flyer.password = md5password.hexdigest()
             flyer.flag = True
             flyer.put()
             flyer_success = "Good Luck!, You have been registered, Have a good travel~<br/><a href='/login'>Login</>"
