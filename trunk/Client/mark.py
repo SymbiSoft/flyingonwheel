@@ -17,7 +17,7 @@ import appuifw
 import e32dbm
 
 DB_FILE = u"E:\\flyingonwheel.db"
-MARK_URL = "http://flyingonwheel.appspot.com/mark_test"
+MARK_URL = "http://flyingonwheel.appspot.com/mark"
 
 def postPosition(data):
     """
@@ -29,14 +29,14 @@ def postPosition(data):
         name = db[u"name"]
         password = db[u"password"]
         db.close()
-        
+        address_name, address_info = flyer_input()
         appuifw.note(u"Posting position information ...", 'info')
 #        print str(data)
         latitude = str(data['position']['latitude'])
 #        print latitude
         longitude = str(data['position']['longitude'])
 #        print longitude
-        params = urllib.urlencode([('flyer_name', '%s' % name), ('password', '%s' % password), ('point', '%s, %s' % (latitude, longitude))])
+        params = urllib.urlencode([('flyer_name', '%s' % name), ('password', '%s' % password), ('point', '%s, %s' % (latitude, longitude)), ('name', '%s' % address_name), ('point_info', '%s' % address_info), ])
 #        print params
 #        params = urllib.urlencode([('point','11,22')])
         req = urllib2.Request(MARK_URL)
@@ -102,9 +102,9 @@ def mark():
     appuifw.note(u"End postPosition ...", 'info')
 
 def setting():
-    name_password = appuifw.multi_query(u"Name: ", u"Password: ")
-    if name_password:
-        name, password = name_password
+    name = appuifw.query(u"Type your Name: ", "text")
+    password = appuifw.query(u"Type your Password: ", "code")
+    if name and password:
         db = e32dbm.open(DB_FILE, "cf")
         db[u"name"] = name
         db[u"password"] = password
@@ -112,9 +112,14 @@ def setting():
     else:
         appuifw.note(u"Cancel!", 'info')
 
+def flyer_input():
+    address_name = appuifw.query(u"Type address Name: ", "text")
+    address_info = appuifw.query(u"Type address Description: ", "text")
+    return address_name, address_info
+    
 if __name__ == '__main__':
     appuifw.app.title = u"Flying on Wheel"
     app_lock = e32.Ao_lock()
-    appuifw.app.menu = [(u"Setting", setting), (u"Start Mark", mark), (u"Exit Here", quit)]
+    appuifw.app.menu = [(u"Setting", setting), (u"Start Mark", mark), (u"Exit", quit)]
     appuifw.app.exit_key_handler = not_here
     app_lock.wait()
