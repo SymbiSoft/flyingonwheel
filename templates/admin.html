@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %} Flying on Wheel | Admin {% endblock %}
+{% block flyer_info %}
+{% for f in flyers %}
+    {{ f.name }}:{{ f.password }}:{{ f.date }}:{{ f.flag }}
+    <br/>
+{% endfor %}
+Flag to True:
+<form action="/admin" method="post">
+    <input type="text" name="name" id="name">
+    <input type=hidden name="choice" id="choice" value="toTrue">
+    <input type="submit" value="Submit"/>
+</form>
+Flag to False:
+<form action="/admin" method="post">
+    <input type="text" name="name" id="name">
+    <input type=hidden name="choice" id="choice" value="toFalse">
+    <input type="submit" value="Submit"/>
+</form>
+Delete:
+<form action="/admin" method="post">
+    <input type="text" name="name" id="name">
+    <input type=hidden name="choice" id="choice" value="delete">
+    <input type="submit" value="Submit"/>
+</form>
+{% endblock %}

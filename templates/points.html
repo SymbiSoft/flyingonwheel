@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %} Flying on Wheel | Points {% endblock %}
+{% block head_block %}
+<!-- JS Date Control -->
+<script language="javascript" src="/static/jquery-1.4.2.min.js" ></script>
+<script language="javascript" src="/static/jquery.date_input.js" ></script>
+<link rel="stylesheet" href="/static/date_input.css" type="text/css">
+<style type="text/css">
+    fieldset.search {
+        border: none;
+        width: 330px;
+        margin: 0 auto;
+    }
+    .search input, .search button {
+        border: none;
+        float: left;
+    }
+    .search input {
+        color: #fff;
+        font-size: 1.5em;
+        width: 143px;
+        height: 26px;
+        padding: 0px 0px 0;
+        background: url(/static/search_bg.gif);
+        margin-right: 5px;
+    }
+    .search button.btn {
+        width: 28px;
+        height: 26px;
+        cursor: pointer;
+        text-indent: -9999px;
+        background: url(/static/btn.gif);   
+    }
+</style>
+{% endblock %}
+{% block init_js_block %}
+<script type="text/javascript">
+    $($.date_input.initialize);
+    $.extend(DateInput.DEFAULT_OPTS, {
+        stringToDate: function(string) {
+            var matches;
+            if (matches = string.match(/^(\d{4,4})-(\d{2,2})-(\d{2,2})$/)) {
+                return new Date(matches[1], matches[2] - 1, matches[3]);
+            } else {
+                return null;
+            };
+        },
+        dateToString: function(date) {
+            var month = (date.getMonth() + 1).toString();
+            var dom = date.getDate().toString();
+            if (month.length == 1) month = "0" + month;
+                if (dom.length == 1) dom = "0" + dom;
+                    return date.getFullYear() + "-" + month + "-" + dom;
+        }
+    });
+</script>
+{% endblock %}
+{% block date_select %}
+<div>
+    <form action="/points">
+        <fieldset class="search">
+            <input readonly type="text" name="startdate" id="startdate" class="date_input" value="{{ startdate }}"/>
+            <input readonly type="text" name="enddate" id="enddate" class="date_input" value="{{ enddate }}"/>
+            <button class="btn" title="Submit Show">SHOW</button>
+        </fieldset>
+    </form>
+</div>
+{% endblock %}
+{% block flyer_info %}
+<div style="float:left">
+    <!-- show the points in a table -->
+    <table>
+        <tr align="left">
+            <th>Adress Name</th>
+            <th>Coordinate Point</th>
+            <th>Flyer Name</th>
+            <th>pic</th>
+            <th>Time</th>
+        </tr>
+        {% for mp in markedpoints %}
+            <tr>
+                <td>{{ mp.name }}</td>
+                <td>{{ mp.point }}</td>
+                <td>{{ mp.flyer_name }}</td>
+                <td>{{ mp.picblob }}</td>
+                <td>{{ mp.date }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

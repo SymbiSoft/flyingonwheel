@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %} Flying on Wheel | Mark {% endblock %}
+{% block flyer_info %}
+    <div style="float:left;width:40%;" align="center">
+        <br/>
+        <br/>
+        <img src="/static/main.png" alt="girl" title="girl"></img>
+    </div>
+    <div style="float:left;width:50%" align="left">
+        <br/>
+        <br/>
+        <br/>
+        Welcome To Flyingonwheel~
+        <br/>
+        <br/>
+        <!-- a post form for update the point -->
+        <div style="width: 40%" align="left">
+            <form action="/mark_test" method="post">
+                <div><label>Adress Name:</label></div>
+                <div><input name="name" ></input></div>
+                <div><label>Coordinate Point:</label></div>
+                <div><input name="point" ></input></div>
+                <div><label>Flyer Name:</label></div>
+                <div><input name="flyer_name" ></input></div>
+                <div><label>Point Infomation:</label></div>
+                <div><textarea name="point_info" rows="3" cols="60"></textarea></div>
+                <div><input type="submit" value="Mark"/></div>
+            </form>
+        </div>
+        <br/>
+        <br/>
+    </div>
+{% endblock %}
