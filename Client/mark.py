@@ -30,7 +30,7 @@ def postPosition(data):
         password = db[u"password"]
         db.close()
         address_name, address_info = flyer_input()
-        appuifw.note(u"Posting position information ...", 'info')
+        appuifw.note(u"Posting position information ...", "info")
 #        print str(data)
         latitude = str(data['position']['latitude'])
 #        print latitude
@@ -43,27 +43,27 @@ def postPosition(data):
         try:
             answer = urllib2.urlopen(req, params)
         except:
-            appuifw.note(u"Could not posting information", 'info')
+            appuifw.note(u"Could not posting information", "info")
         else:
-            appuifw.note(u"Position Information Posted", 'info')
+            appuifw.note(u"Position Information Posted", "info")
 
 def getPosition():
     """
         Get GPS co-ordinates
     """
-    appuifw.note(u"Getting Current Position...", 'info')
+    appuifw.note(u"Getting Current Position...", "info")
 #    print 'positioning.select_module'
     positioning.select_module(positioning.default_module())
 #    print 'positioning.set_requestors'
     positioning.set_requestors([{'type': 'service', 'format': 'application', 'data': 'position'}])
 #    print 'positioning.position'
-    appuifw.note(u"Retrieving GPS co-ordinates ...", 'info')
+    appuifw.note(u"Retrieving GPS co-ordinates ...", "info")
     try:
         result = positioning.position(course=1, satellites=1)
     except:
-        appuifw.note(u"Could not retrieve GPS co-ordinates", 'info')
+        appuifw.note(u"Could not retrieve GPS co-ordinates", "info")
     else:
-        appuifw.note(u"GPS co-ordinates retrieved", 'info')
+        appuifw.note(u"GPS co-ordinates retrieved", "info")
 #    positioning.stop_position()
     return result
     
@@ -77,7 +77,7 @@ def not_here():
     """
         bind Exit button to this
     """
-    appuifw.note(u"Exit isn't here", 'info')
+    appuifw.note(u"Exit isn't here", "info")
 
 def writeLog(data):
     """
@@ -87,21 +87,24 @@ def writeLog(data):
         try:
             file('E:\\gpslog.log', 'a').write('%s|%s|%s\n\n' % (str(time.ctime()), str(data['position']['latitude']), str(data['position']['longitude'])))
         except:
-            appuifw.note(u"Writing log error", 'info')
+            appuifw.note(u"Writing log error", "info")
         else:
-            appuifw.note(u"Log writed", 'info')
+            appuifw.note(u"Log writed", "info")
 
 def mark():
     """
-        starts here
+        mark starts here
     """
-    appuifw.note(u"Start getPosition ...", 'info')
+    appuifw.note(u"Start getPosition ...", "info")
     data = getPosition()
     postPosition(data)
     writeLog(data)
-    appuifw.note(u"End postPosition ...", 'info')
+    appuifw.note(u"End postPosition ...", "info")
 
 def setting():
+    """
+        setting the name and password
+    """
     name = appuifw.query(u"Type your Name: ", "text")
     password = appuifw.query(u"Type your Password: ", "code")
     if name and password:
@@ -110,9 +113,12 @@ def setting():
         db[u"password"] = password
         db.close()
     else:
-        appuifw.note(u"Cancel!", 'info')
+        appuifw.note(u"Cancel!", "info")
 
 def flyer_input():
+    """
+        input the address name and the address description
+    """
     address_name = appuifw.query(u"Type address Name: ", "text")
     address_info = appuifw.query(u"Type address Description: ", "text")
     return address_name, address_info

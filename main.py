@@ -43,6 +43,10 @@ class MarkedPoint(db.Model):
     flyer_name = db.StringProperty()
     picblob = db.BlobProperty()
     date = db.DateTimeProperty(auto_now_add=True)
+    
+    @property
+    def id(self):
+        return str(self.key().id())    
 
 class Flyer(db.Model):
     """
@@ -50,6 +54,7 @@ class Flyer(db.Model):
     """
     name = db.StringProperty()
     password = db.StringProperty()
+    address = db.StringProperty()
     flag = db.BooleanProperty()
     date = db.DateTimeProperty(auto_now_add=True)
 
@@ -93,7 +98,10 @@ class Mark(webapp.RequestHandler):
             markedpoint.point = self.request.get("point")
             markedpoint.point_info = self.request.get("point_info")
             markedpoint.flyer_name = name
-            markedpoint.picblob = self.request.get("picblob")
+            # you can choice upload a pic or not
+            tempblob = self.request.get("picblob")
+            if tempblob:
+                markedpoint.picblob = tempblob
             markedpoint.put()
             self.response.out.write('True')
         else:
@@ -101,9 +109,9 @@ class Mark(webapp.RequestHandler):
 
 class Mark_test(webapp.RequestHandler):
     """
-        Mark the point, just for test, and for new function
+        Mark the point, just test which for develop new function
     """
-#    @requires_admin
+    @requires_admin
     def get(self):
         """
             The form of the point
@@ -112,7 +120,7 @@ class Mark_test(webapp.RequestHandler):
         }
         path = os.path.join(os.path.dirname(__file__), 'templates/mark_test.html')
         self.response.out.write(template.render(path, template_values))
-#    @requires_admin
+    @requires_admin
     def post(self):
         """
             Catch the post which come from the flyer who update the points
@@ -122,7 +130,10 @@ class Mark_test(webapp.RequestHandler):
         markedpoint.point = self.request.get("point")
         markedpoint.point_info = self.request.get("point_info")
         markedpoint.flyer_name = self.request.get("flyer_name")
-        markedpoint.picblob = self.request.get("picblob")
+        # you can choice upload a pic or not
+        tempblob = self.request.get("picblob")
+        if tempblob:
+            markedpoint.picblob = tempblob
         markedpoint.put()
         self.redirect('/mark_test')
 
@@ -400,7 +411,19 @@ class Points(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'templates/points.html')
         self.response.out.write(template.render(path, template_values))
 
+class Image(webapp.RequestHandler):
+    """
+        image for showing
+    """
+    def get(self, id):
+        id = int(id)
+        mp = MarkedPoint.get_by_id(id)
+        image = mp.picblob
+        self.response.headers['Content-Type'] = 'image/jpeg'
+        self.response.out.write(image)
+
 application = webapp.WSGIApplication([
+  ('/image/(?P<id>[0-9]+)/', Image),
   ('/mark', Mark),
   ('/mark_test', Mark_test),
   ('/marks', Marks),

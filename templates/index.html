@@ -61,17 +61,17 @@
     var image = new google.maps.MarkerImage('/static/mark.png',
         new google.maps.Size(60, 60),
         new google.maps.Point(0,0),
-        new google.maps.Point(-12, 32));
+        new google.maps.Point(3, 33));
     var shadow = new google.maps.MarkerImage('/static/mark_shadow.png',
         new google.maps.Size(60, 60),
         new google.maps.Point(0,0),
-        new google.maps.Point(-12, 32));
+        new google.maps.Point(3, 33));
     
     function initialize() {
         directionsDisplay = new google.maps.DirectionsRenderer();
         var myLatLng = new google.maps.LatLng(34.506445,109.517914);
         var myOptions = {
-            zoom: 15,
+            zoom: 4,
             center: myLatLng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
@@ -84,21 +84,18 @@
             strokeWeight: 1
         }
         poly = new google.maps.Polyline(polyOptions);
-        poly.setMap(map);
+        //poly.setMap(map);//for draw straight line...
         directionsDisplay.setMap(map);
         detectBrowser();
         var waypoints = [];
         {% for mp in markedpoints %}
-            addLatLng("{{ mp.name }}", {{ mp.point }});
+            addLatLng("{{ mp.name }}", "{{ mp.point_info }}", "{{ mp.date }}", "{{ mp.id }}", {{ mp.point }});
             waypoints.push("{{ mp.point }}");
         {% endfor %}
         calcRoute(waypoints);
     }
-    function addLatLng(name, lat, lng) {
-        //alert("lat: " + lat);
-        //alert("lng: " + lng);
+    function addLatLng(name, point_info, date, id, lat, lng) {
         var latLng = new google.maps.LatLng(lat, lng);
-        //alert(latLng);
         var path = poly.getPath();
         path.insertAt(pathCoordinates.length, latLng);
         var marker = new google.maps.Marker({
@@ -108,13 +105,20 @@
             icon: image,
             shadow: shadow
         });
+        google.maps.event.addListener(marker, 'click', function() {
+            info(map, marker, name, point_info, date, id);
+        });
+    }
+    function info(map, marker, name, point_info, date, id) {
+        var contentString = '<div id="content"><td>'+name+'</td><br/><td>'+point_info+'</td></br><td>'+date+'</td></br><td><img src="/image/'+id+'/"/></td></div>';
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        infowindow.open(map, marker);
     }
     function calcRoute(points) {
         var start = points[0];
-        //alert(start);
         var end = points[points.length-1];
-        //alert(end);
-        //alert(points.length)
         var waypts = [];
         for (var i = 1; i < points.length-1; i++) {
             waypts.push({
@@ -178,7 +182,7 @@
         <a href="/?startdate={{ startdate }}&enddate={{ enddate }}"></a>
     </span>
     <span id="nextBtn">
-        <a href="javascript:void(0);"></a>
+        <a href="/?startdate={{ startdate }}&enddate={{ enddate }}"></a>
     </span>
 </p>
 {% endblock %}
