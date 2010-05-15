@@ -74,7 +74,7 @@
             <th>Adress Name</th>
             <th>Coordinate Point</th>
             <th>Flyer Name</th>
-            <th>pic</th>
+            <th>Picture</th>
             <th>Time</th>
         </tr>
         {% for mp in markedpoints %}
@@ -82,7 +82,7 @@
                 <td>{{ mp.name }}</td>
                 <td>{{ mp.point }}</td>
                 <td>{{ mp.flyer_name }}</td>
-                <td>{{ mp.picblob }}</td>
+                <td><img src="/image/{{ mp.id }}/"/></td>
                 <td>{{ mp.date }}</td>
             </tr>
         {% endfor %}
