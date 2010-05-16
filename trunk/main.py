@@ -16,6 +16,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from appengine_utilities import sessions
 from google.appengine.api import memcache
 from functools import wraps
+from google.appengine.api import images
 
 logging.getLogger().setLevel(logging.DEBUG)
 
@@ -111,7 +112,7 @@ class Mark_test(webapp.RequestHandler):
     """
         Mark the point, just test which for develop new function
     """
-    @requires_admin
+#    @requires_admin
     def get(self):
         """
             The form of the point
@@ -120,7 +121,7 @@ class Mark_test(webapp.RequestHandler):
         }
         path = os.path.join(os.path.dirname(__file__), 'templates/mark_test.html')
         self.response.out.write(template.render(path, template_values))
-    @requires_admin
+#    @requires_admin
     def post(self):
         """
             Catch the post which come from the flyer who update the points
@@ -132,10 +133,12 @@ class Mark_test(webapp.RequestHandler):
         markedpoint.flyer_name = self.request.get("flyer_name")
         # you can choice upload a pic or not
         tempblob = self.request.get("picblob")
+        tempblob = images.resize(tempblob, 32, 32)
+        tempblob = db.Blob(tempblob)
         if tempblob:
             markedpoint.picblob = tempblob
         markedpoint.put()
-        self.redirect('/mark_test')
+        self.response.out.write('True: '+tempblob)
 
 class Marks(webapp.RequestHandler):
     """
