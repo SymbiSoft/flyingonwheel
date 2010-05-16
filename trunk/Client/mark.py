@@ -24,7 +24,7 @@ def postPosition(data):
         post data to flyingonwheel.appspot.com
     """
     if data:
-####        Read the name and password from db
+        # Read the name and password from db
         db = e32dbm.open(DB_FILE, "r")
         name = db[u"name"]
         password = db[u"password"]
