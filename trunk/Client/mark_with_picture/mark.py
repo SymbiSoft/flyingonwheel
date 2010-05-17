@@ -29,6 +29,12 @@ MARK_URL = 'http://flyingonwheel.appspot.com/mark'
 file_pic = 'e:\\photo.jpg'
 photo_taked = False
 
+def de_cn(x):
+    return x.decode("utf-8")
+
+def en_cn(x):
+    return x.encode("utf-8")
+
 def viewfinder(img):
     """
         handled by camera.take_photo, use for showing current pic
@@ -72,7 +78,7 @@ def postPosition(data):
         try:
             cookies = cookielib.CookieJar()
             opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookies), MultipartPostHandler.MultipartPostHandler)
-            params = { 'flyer_name': '%s' % name, 'password': '%s' % password, 'point': '%s, %s' % (latitude, longitude), 'name': '%s' % address_name, 'point_info': '%s' % address_info, "picblob": file_data }
+            params = { 'flyer_name': '%s' % name, 'password': '%s' % password, 'point': '%s, %s' % (latitude, longitude), 'name': '%s' % en_cn(address_name), 'point_info': '%s' % en_cn(address_info), "picblob": file_data }
             answer = opener.open(MARK_URL, params)
             if answer.code == 200:
                 appuifw.note(u"Position Information Posted", "info")
@@ -134,10 +140,11 @@ def mark():
         writeLog(data)
         appuifw.note(u"End mark", "info")
     else:
-        e32.ao_sleep(7)
+#        e32.ao_sleep(7)
         postPosition(data)
         writeLog(data)
         appuifw.note(u"End mark", "info")
+    canvas.blit(photo)
 
 def setting():
     """
@@ -164,7 +171,7 @@ def flyer_input():
 if __name__ == '__main__':
     appuifw.app.body = canvas = appuifw.Canvas()
     appuifw.app.title = u"Flying on Wheel"
-    photo = Image.open("e:\\data\\python\\logo.jpg")
+    photo = Image.open("e:\\data\\python\\bg.jpg")
     canvas.blit(photo)
     app_lock = e32.Ao_lock()
     appuifw.app.menu = [(u"Setting", setting), (u"Start Mark", mark), (u"Exit", quit)]

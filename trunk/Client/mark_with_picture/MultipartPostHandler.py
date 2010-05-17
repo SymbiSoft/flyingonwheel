@@ -1,5 +1,5 @@
-#!/usr/bin/python
-
+#-*- coding: utf-8 -*-
+# 测试中文
 ####
 # 02/2006 Will Holcomb <wholcomb@gmail.com>
 # 
@@ -122,7 +122,7 @@ def main():
     def validateFile(url):
         temp = tempfile.mkstemp(suffix=".html")
         os.write(temp[0], opener.open(url).read())
-        params = { "ss" : "0",            # show source
+        params = { "ss" : "天涯",            # show source
                    "doctype" : "Inline",
                    "uploaded_file" : open(temp[1], "rb") }
         print opener.open(validatorURL, params).read()
