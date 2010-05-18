@@ -18,14 +18,13 @@
                             {% if flyer_name %}
                                 <!-- choice which days to view -->
                                 <li>{% block date_select %}{% endblock %}</li>
-                                <li><a href="/">MAP</a></li>
                                 <li><a href="/marks">LIST</a></li>
                                 <li><a href="/flyer/{{ flyer_name }}"> {{ flyer_name }} </a></li>
-                                <li><a href="/logout"> Logout </a></li>
+                                <li><a href="/logout"> LOGOUT </a></li>
                             {% else %}
                                 <li>Welcome to login or register</li>
-                                <li><a href="/login"> Login </a></li>
-                                <li><a href="/register"> Register </a></li>
+                                <li><a href="/login"> LOGIN </a></li>
+                                <li><a href="/register"> REGISTER </a></li>
                             {% endif %}
                         </ul>
                     </div>
