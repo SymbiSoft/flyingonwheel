@@ -140,7 +140,7 @@ def mark():
         writeLog(data)
         appuifw.note(u"End mark", "info")
     else:
-#        e32.ao_sleep(7)
+        e32.ao_sleep(7)
         postPosition(data)
         writeLog(data)
         appuifw.note(u"End mark", "info")
